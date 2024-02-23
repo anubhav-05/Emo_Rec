@@ -2,3 +2,4 @@ Flask
 keras
 numpy
 Pillow
+Tensorflow
