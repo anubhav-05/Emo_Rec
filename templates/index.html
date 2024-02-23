@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Upload</title>
+    <link rel="stylesheet" href="../static/css/styles.css">
+</head>
+
+<body>
+    <header>
+        <!-- <nav class="navbar">
+            <div class="navbar-left">
+                <h1>Emotion Recognition</h1>
+            </div>
+            <div class="navbar-right">
+                <button class="btn">Sign In</button>
+                <button class="btn">About Us</button>
+            </div>
+        </nav> -->
+    </header>
+
+    <div class="main">
+        <form id="imageForm" enctype="multipart/form-data">
+            <div class="center1">
+                <div class="center">
+                    <label id="hello" for="imageInput">Select an image:</label>
+                </div>
+                <div class="center">
+                    <input type="file" id="imageInput" name="file" accept="image/*">
+                </div>
+                <div class="center">
+                    <button type="button" onclick="uploadImage()">Predict</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div id="result" class="center1">
+        <!-- <h2 id="emotionText" id="one">{{ emotion1 }}</h2>
+        <h2 id="emotionText">{{ emotion2 }}</h2>
+        <h2 id="emotionText">{{ emotion3 }}</h2>
+        <h2 id="emotionText" id="four">{{ emotion4 }}</h2>
+        <h2 id="emotionText">{{ emotion5 }}</h2>
+        <h2 id="emotionText">{{ emotion6 }}</h2>
+        <h2 id="emotionText">{{ emotion7 }}</h2> -->
+    </div>
+
+    <script>
+        function uploadImage() {
+            const inputElement = document.getElementById('imageInput');
+            const file = inputElement.files[0];
+
+            if (file) {
+                const formData = new FormData();
+                formData.append('file', file);
+
+                fetch('/upload', {
+                    method: 'POST',
+                    body: formData
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        // Check if data.emotion1 exists
+                        if (data.emotion1) {
+                            // Update the HTML content with the predicted emotion1
+                            document.getElementById('result').innerHTML = `
+                        <h4>Prediction:</h4>
+                        <p style="font-size: 40px; font-weight: bold; color: red;">${data.emotion1}</p>
+                    `;
+                    console.log("hello");
+                        }
+                        else if (data.emotion2) {
+                            document.getElementById('result').innerHTML = `
+                            <h4>Prediction:</h4>
+                            <p style="font-size: 40px; font-weight: bold; color: purple;">${data.emotion2}</p>
+                            `;
+                    console.log("hello2");
+
+                        }
+                        else if (data.emotion3) {
+                            document.getElementById('result').innerHTML = `
+                            <h4>Prediction:</h4>
+                            <p style="font-size: 40px; font-weight: bold; color: orange;">${data.emotion3}</p>
+                            `;
+                    console.log("hello3");
+
+                        }
+                        else if (data.emotion4) {
+                            document.getElementById('result').innerHTML = `
+                            <h4>Prediction:</h4>
+                            <p style="font-size: 40px; font-weight: bold; color: green;">${data.emotion4}</p>
+                            `
+                            ;
+                        }
+                        else if (data.emotion5) {
+                            document.getElementById('result').innerHTML = `
+                            <h4>Prediction:</h4>
+                            <p style="font-size: 40px; font-weight: bold; color: gray;">${data.emotion5}</p>`;
+                        }
+                        else if (data.emotion6) {
+                            document.getElementById('result').innerHTML = `
+                            <h4>Prediction:</h4>
+                            <p style="font-size: 40px; font-weight: bold; color: blue;">${data.emotion6}</p>`;
+                        }
+                        else {
+                            // If data.emotion1 doesn't exist, show the default emotion
+                            document.getElementById('result').innerHTML = `
+                        <h4>Prediction:</h4>
+                            <p style="font-size: 40px; font-weight: bold; color: cyan;">${data.emotion7}</p>
+                    `;
+                    console.log("hellorandi");
+
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+            } else {
+                console.error('No image selected');
+            }
+        }
+    </script>
+</body>
+
+</html>
