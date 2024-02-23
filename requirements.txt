@@ -4,4 +4,4 @@ numpy
 Pillow
 Tensorflow
 tensorrt
-cuda
+pycuda
